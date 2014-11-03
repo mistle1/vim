@@ -44,10 +44,10 @@ set columns=100
 set lines=48
 
 " laststatus ステータスラインの表示 2 : 常にステータスラインを表示する
-set laststatus=2
+" set laststatus=2
 
 " statusline ステータス行の表示内容を設定 
-set statusline=2
+" set statusline=2
 
 
 colorscheme molokai
