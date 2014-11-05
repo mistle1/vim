@@ -1,118 +1,57 @@
-"=============================================================================
-"    Description: .gvimrcサンプル設定
-"         Author:
-"  Last Modified: 0000-00-00 00:00
-"        Version: 0.00
-"=============================================================================
-scriptencoding cp932
-"----------------------------------------
-" システム設定
-"----------------------------------------
-" エラー時の音とビジュアルベルの抑制
-set noerrorbells
-set novisualbell
-set visualbell t_vb=
-
-if has('multi_byte_ime') || has('xim')
-  set iminsert=0 imsearch=0
-  if has('xim') && has('GUI_GTK')
-    " XIMの入力開始キー
-    " set imactivatekey=C-space
-  endif
-endif
-
-" IMEの状態をカラー表示
-if has('multi_byte_ime')
-  highlight Cursor guifg=NONE guibg=Green
-  highlight CursorIM guifg=NONE guibg=Purple
-endif
-
-"----------------------------------------
-" 表示設定
-"----------------------------------------
-" ツールバーを非表示
-" set guioptions-=T
-" コマンドラインの高さ
-set cmdheight=2
-
+"-----------------
+" 基本的な設定
+"-----------------
+" showtabline タブページを表示するか指定 2 : 常に表示
 set showtabline=2
 
+" transparency 半透明の指定 255 : 透明じゃなくなります 1 : 透明
+" set transparency=10
+
+" imdisable 日本語入力を使わない 初期値 : オフ
+set imdisable
+
+" guioptions GUI用オプション T : ツールバー表示 -=T : 表示しない
+set guioptions-=T
+
+" antialias フォントがアンチエイリアスされる（Macのみ）
+set antialias
+
+" tabstop ファイル内の<tab>が対応する空白の数 初期値 : 8
+set tabstop=4
+
+" number 行番号表示
+set number
+
+" backup ファイルを上書きする前にバックアップファイルを作る nobackup 作らない
+" ファイルの上書きの前にバックアップを作る/作らない
+" set writebackupを指定してもオプション 'backup' がオンでない限り、
+" バックアップは上書きに成功した後に削除される。
+set nowritebackup
+" バックアップ/スワップファイルを作成する/しない
+set nobackup
+
+" visualbell エラーにビープ音をフラッシュにする t_vb= : フラッシュもオフにする
+set visualbell t_vb=
+
+" wrapscan 検索をファイルの末尾まで検索したら、先頭へループ
+" nowrapscan : ループしない
+set nowrapscan
+
+" columns スクリーン上の列幅 初期値 : 80 またはターミナル幅
+set columns=100
+
+" limes ウィンドウの高さを行単位で指定する 初期値 : 24 or ターミナル幅
+set lines=48
+
+" laststatus ステータスラインの表示 2 : 常にステータスラインを表示する
+" set laststatus=2
+
+" statusline ステータス行の表示内容を設定 
+" set statusline=2
 
 
-" カラー設定:
 colorscheme molokai
 
-" フォント設定
-" フォントは英語名で指定すると問題が起きにくくなります
-if has('xfontset')
-  " set guifontset=a14,r14,k14
-elseif has('unix')
 
-elseif has('mac')
-  " set guifont=Osaka-Mono:h14
-elseif has('win32') || has('win64')
-  " set guifont=MS_Gothic:h12:cSHIFTJIS
-  " set guifontwide=MS_Gothic:h12:cSHIFTJIS
-endif
 
-" 印刷用フォント
-if has('printer')
-  if has('win32') || has('win64')
-  " set printfont=MS_Mincho:h12:cSHIFTJIS
-  " set printfont=MS_Gothic:h12:cSHIFTJIS
-  endif
-endif
-
-""""""""""""""""""""""""""""""
-" Window位置の保存と復帰
-""""""""""""""""""""""""""""""
-if has('unix')
-  let s:infofile = '~/.vim/.vimpos'
-else
-  let s:infofile = '~/_vimpos'
-endif
-
-function! s:SaveWindowParam(filename)
-  redir => pos
-  exec 'winpos'
-  redir END
-  let pos = matchstr(pos, 'X[-0-9 ]\+,\s*Y[-0-9 ]\+$')
-  let file = expand(a:filename)
-  let str = []
-  let cmd = 'winpos '.substitute(pos, '[^-0-9 ]', '', 'g')
-  cal add(str, cmd)
-  let l = &lines
-  let c = &columns
-  cal add(str, 'set lines='. l.' columns='. c)
-  silent! let ostr = readfile(file)
-  if str != ostr
-    call writefile(str, file)
-  endif
-endfunction
-
-augroup SaveWindowParam
-  autocmd!
-  execute 'autocmd SaveWindowParam VimLeave * call s:SaveWindowParam("'.s:infofile.'")'
-augroup END
-
-if filereadable(expand(s:infofile))
-  execute 'source '.s:infofile
-endif
-unlet s:infofile
-
-"----------------------------------------
-"メニューアイテム作成
-"----------------------------------------
-silent! aunmenu &File.Save
-silent! aunmenu &File.保存(&S)
-silent! aunmenu &File.差分表示(&D)\.\.\.
-
-let message_revert="再読込しますか?"
-amenu <silent> 10.330 &File.再読込(&U)<Tab>:e!  :if confirm(message_revert, "&Yes\n&No")==1<Bar> e! <Bar> endif<CR>
-amenu <silent> 10.331 &File.バッファ削除(&K)<Tab>:bd  :confirm bd<CR>
-amenu <silent> 10.340 &File.保存(&W)<Tab>:w  :if expand('%') == ''<Bar>browse confirm w<Bar>else<Bar>confirm w<Bar>endif<CR>
-amenu <silent> 10.341 &File.更新時保存(&S)<Tab>:update  :if expand('%') == ''<Bar>browse confirm w<Bar>else<Bar>confirm update<Bar>endif<CR>
-amenu <silent> 10.400 &File.現バッファ差分表示(&D)<Tab>:DiffOrig  :DiffOrig<CR>
-amenu <silent> 10.401 &File.裏バッファと差分表示(&D)<Tab>:Diff\ #  :Diff #<CR>
-amenu <silent> 10.402 &File.差分表示(&D)<Tab>:Diff  :browse vertical diffsplit<CR>
 
