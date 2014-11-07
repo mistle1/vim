@@ -29,6 +29,8 @@ set number
 set nowritebackup
 " バックアップ/スワップファイルを作成する/しない
 set nobackup
+set noswapfile
+set noundofile
 
 " visualbell エラーにビープ音をフラッシュにする t_vb= : フラッシュもオフにする
 set visualbell t_vb=
@@ -49,8 +51,9 @@ set lines=48
 " statusline ステータス行の表示内容を設定 
 " set statusline=2
 
+set background=dark
+colorscheme solarized
 
-colorscheme molokai
 
 
 

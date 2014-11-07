@@ -49,6 +49,9 @@ set showmatch
 "カーソル行の背景色を変える
 set cursorline
 
+" statusline ステータス行の表示内容を設定 
+set statusline=2
+
 "カーソル位置のカラムの背景色を変える
 set cursorcolumn
 
@@ -61,6 +64,7 @@ set listchars=tab:^\ ,trail:~
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=indent,eol,start
 
+set guifont=HGGothicM:h12
 " マウスを有効にする
 if has('mouse')
   set mouse=a
