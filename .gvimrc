@@ -17,7 +17,7 @@ set guioptions-=T
 set antialias
 
 " tabstop ファイル内の<tab>が対応する空白の数 初期値 : 8
-set tabstop=4
+"set tabstop=4
 
 " number 行番号表示
 set number
@@ -29,6 +29,8 @@ set number
 set nowritebackup
 " バックアップ/スワップファイルを作成する/しない
 set nobackup
+set noswapfile
+set noundofile
 
 " visualbell エラーにビープ音をフラッシュにする t_vb= : フラッシュもオフにする
 set visualbell t_vb=
@@ -49,9 +51,13 @@ set lines=48
 " statusline ステータス行の表示内容を設定 
 " set statusline=2
 
+" MacVim-kaoriyaのみ 挿入モード→コマンドモードでescキー時、日本語入力off
+set imdisable
 
 colorscheme molokai
 
+"guifont
+set guifont=Osaka-Mono:h16
 
 
 

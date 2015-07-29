@@ -1,3 +1,38 @@
+"---------------------------
+" Start Neobundle Settings.
+"---------------------------
+" bundleで管理するディレクトリを指定
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+ 
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+ 
+" neobundle自体をneobundleで管理
+NeoBundleFetch 'Shougo/neobundle.vim'
+ 
+" 今後このあたりに追加のプラグインをどんどん書いて行きます！！"
+
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
+
+NeoBundle 'JulesWang/css.vim'
+NeoBundle 'cakebaker/scss-syntax.vim'
+
+
+call neobundle#end()
+ 
+" Required:
+filetype plugin indent on
+ 
+" 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+" 毎回聞かれると邪魔な場合もあるので、この設定は任意です。
+NeoBundleCheck
+
+"-------------------------
+" End Neobundle Settings.
+"-------------------------
+
 "--------------------
 " 基本的な設定
 "--------------------
@@ -8,7 +43,7 @@ set autoindent
 set backupdir=$HOME/vimbackup
 
 "クリップボードをWindowsと連携する
-set clipboard=unnamed
+set clipboard+=unnamed
 
 "vi互換をオフする
 set nocompatible
@@ -65,7 +100,12 @@ set backspace=indent,eol,start
 if has('mouse')
   set mouse=a
 endif
-
+" ステータスを常に表示
+set laststatus=2
+" ステータス行の表示内容設定
+set statusline=2
+" ステータス行を2行表示
+set cmdheight=2
 " grep検索を設定する
 set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
 set grepprg=grep\ -nh
@@ -169,4 +209,54 @@ let g:netrw_altv = 1
 let g:netrw_alto = 1
 
 
+
+
+" showtabline タブページを表示するか指定 2 : 常に表示
+set showtabline=2
+
+" tabstop ファイル内の<tab>が対応する空白の数 初期値 : 8
+set tabstop=4
+
+if has("autocmd")
+"ファイルタイプの検索を有効にする
+filetype plugin on
+"そのファイルタイプにあわせたインデントを利用する
+filetype indent on
+" これらのftではインデントを無効に
+au BufRead,BufNewFile *.scss set filetype=sass
+autocmd FileType php filetype indent off
+autocmd FileType apache     setlocal sw=4 sts=4 ts=4 et
+autocmd FileType aspvbs     setlocal sw=4 sts=4 ts=4 et
+autocmd FileType c          setlocal sw=4 sts=4 ts=4 et
+autocmd FileType cpp        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType cs         setlocal sw=4 sts=4 ts=4 et
+autocmd FileType css        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType diff       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType eruby      setlocal sw=4 sts=4 ts=4 et
+autocmd FileType html       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType javascript setlocal sw=4 sts=4 ts=4 et
+autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType php        setlocal sw=4 sts=4 ts=4 noet
+autocmd FileType python     setlocal sw=4 sts=4 ts=4 et
+autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
+autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
+autocmd FileType sass       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType scss       setlocal sw=4 sts=4 ts=4 et
+autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
+autocmd FileType sql        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType vb         setlocal sw=4 sts=4 ts=4 et
+autocmd FileType vim        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType wsh        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType xhtml      setlocal sw=4 sts=4 ts=4 et
+autocmd FileType xml        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
+autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
+autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+au BufRead,BufNewFile *.md set filetype=markdown
+endif
+
+syntax on
+
+colorscheme molokai
 
