@@ -40,7 +40,7 @@ NeoBundleCheck
 set autoindent 
 
 "バックアップファイルのディレクトリを指定する
-set backupdir=$HOME/vimbackup
+"set backupdir=$HOME/vimbackup
 
 "クリップボードをWindowsと連携する
 set clipboard+=unnamed
@@ -49,7 +49,12 @@ set clipboard+=unnamed
 set nocompatible
 
 "スワップファイル用のディレクトリを指定する
-set directory=$HOME/vimbackup
+"set directory=$HOME/vimbackup
+
+set nowritebackup
+set nobackup
+set noswapfile
+
 
 "タブの代わりに空白文字を指定する
 set expandtab
@@ -112,6 +117,16 @@ set grepprg=grep\ -nh
 
 " 検索結果のハイライトをEsc連打でクリアする
 nnoremap <ESC><ESC> :nohlsearch<CR>
+
+
+" iTermの時vimのカーソル形状を変更
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
 "------------------------------------
 "   文字コードの自動認識
